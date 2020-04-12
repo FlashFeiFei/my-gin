@@ -1,0 +1,3 @@
+mysql:
+  default:
+    dsn: root:@(localhost)/go_user?charset=utf8mb4&parseTime=True&loc=Local
