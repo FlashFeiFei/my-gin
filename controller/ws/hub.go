@@ -3,6 +3,7 @@ package ws
 //聊天的房间定义
 //聊天室的作用，是把一个用户发送的信息通知给其他在这个房间的用户
 
+
 type Hub struct {
 	//房间中的客户
 	clients map[*Client]bool
