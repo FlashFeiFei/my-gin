@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"github.com/DeanThompson/ginpprof"
 	"github.com/FlashFeiFei/my-gin/common-lib/config"
 	"github.com/FlashFeiFei/my-gin/common-lib/db"
 	"github.com/FlashFeiFei/my-gin/common-lib/db/mysql"
@@ -51,7 +50,7 @@ func main() {
 	// 默认启动方式，包含 Logger、Recovery 中间件
 	router := gin.Default()
 	//goin的性能分析
-	ginpprof.Wrapper(router)
+	//ginpprof.Wrapper(router)
 
 	router.POST("/oauth/client/addclient", oauth.AddClient)
 
