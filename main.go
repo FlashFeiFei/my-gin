@@ -61,7 +61,7 @@ func main() {
 		user_router := background_router.Group("/user")
 		{
 			user_controller := controller.NewController(new(background.UserController))
-			user_router.GET("/:action", user_controller)     //访问background/user/hello_world?name=1
+			user_router.GET("/:action/", user_controller)     //访问background/user/hello_world?name=1
 			user_router.GET("/:action/:id", user_controller) //resetful风格访问background/user/hello_world2/1?name=1
 		}
 	}

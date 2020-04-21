@@ -3,8 +3,8 @@ package controller
 import (
 	"errors"
 	"fmt"
-	"github.com/gin-gonic/gin"
 	"github.com/FlashFeiFei/my-gin/help"
+	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
 	"reflect"
@@ -39,17 +39,14 @@ func NewController(exec_controller Controller) func(*gin.Context) {
 		controller.Prepare()                 //一些钩子吧,在真正执行到控制器请求前在做一下操作，例如权限认证等
 
 		var param []reflect.Value // 反射调用方法所需要的参数
-		param = make([]reflect.Value, 1)
 		action := context.Param("action") //获取执行控制器的方法
 		id_string := context.Param("id")
 		log.Println(id_string)
 		id, err := strconv.ParseUint(id_string, 10, 64) //id
 		if err == nil {
 			//转成功才添加
+			param = make([]reflect.Value, 1)
 			param[0] = reflect.ValueOf(id)
-		} else {
-			panic(errors.New("id不是number"))
-			return
 		}
 
 		log.Println(id)
