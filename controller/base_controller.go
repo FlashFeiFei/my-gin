@@ -56,7 +56,24 @@ func NewController(exec_controller Controller) func(*gin.Context) {
 		}
 
 		log.Println(id)
-		if len(action) == 0 {
+		//通过反射去执行具体的方法
+		value := reflect.ValueOf(controller)
+		//通过路径中的action参数，去解析，调用具体的控制器方法
+		action = strings.Trim(action, " ") //修剪一下空格
+		var action_split []string
+		action_split = strings.Split(action, "-") // '-' 符号分割方法, 例如 hello-world，谷歌是 '-'
+		if len(action_split) == 1 {
+			action_split = strings.Split(action, "_") // '_'符号分割方法，例如hello_world,百度是 '_'
+		}
+
+		for index, item := range action_split {
+			action_split[index] = help.StrFirstToUpper(item) //首字母大写
+		}
+		action = strings.Join(action_split, "") //拼接方法
+		call_method := value.MethodByName(action)
+		log.Println("执行方法", action)
+		if !call_method.IsValid() {
+
 			//没有找到action参数，通过请求类型去执行具体对应的方法
 			switch method := context.Request.Method; method {
 			case http.MethodGet:
@@ -77,27 +94,7 @@ func NewController(exec_controller Controller) func(*gin.Context) {
 				panic(errors.New(fmt.Sprintf("还不支持的方法: %s", method)))
 			}
 			return
-		}
 
-		//通过反射去执行具体的方法
-		value := reflect.ValueOf(controller)
-		//通过路径中的action参数，去解析，调用具体的控制器方法
-		action = strings.Trim(action, " ") //修剪一下空格
-		var action_split []string
-		action_split = strings.Split(action, "-") // '-' 符号分割方法, 例如 hello-world，谷歌是 '-'
-		if len(action_split) == 1 {
-			action_split = strings.Split(action, "_") // '_'符号分割方法，例如hello_world,百度是 '_'
-		}
-
-		for index, item := range action_split {
-			action_split[index] = help.StrFirstToUpper(item) //首字母大写
-		}
-		action = strings.Join(action_split, "") //拼接方法
-		call_method := value.MethodByName(action)
-		log.Println("执行方法", action)
-		if !call_method.IsValid() {
-			help.Gin400NotFoundResponse(context, errors.New(fmt.Sprintf("找不到方法:%s", action)), nil)
-			return
 		}
 		//调用方法
 		call_method.Call(param)
