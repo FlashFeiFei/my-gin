@@ -35,8 +35,8 @@ func NewController(exec_controller Controller) func(*gin.Context) {
 			controller.Finish() //做一些释放资源的操作
 		}()
 
-		controller.Init(context, controller) //控制器初始化,类似构造函数
-		controller.Prepare()                 //一些钩子吧,在真正执行到控制器请求前在做一下操作，例如权限认证等
+		controller.Init(context) //控制器初始化,类似构造函数
+		controller.Prepare()    //一些钩子吧,在真正执行到控制器请求前在做一下操作，例如权限认证等
 
 		var param []reflect.Value // 反射调用方法所需要的参数
 		action := context.Param("action") //获取执行控制器的方法
@@ -101,7 +101,7 @@ func NewController(exec_controller Controller) func(*gin.Context) {
 
 //参考beego
 type Controller interface {
-	Init(ctx *gin.Context, controller interface{}) //ctx是gin的Context controller是当前执行的控制器,初始化
+	Init(ctx *gin.Context) //ctx是gin的Context controller是当前执行的控制器,初始化
 	Prepare()                                      //解析
 	Get()
 	Post()
@@ -115,13 +115,11 @@ type Controller interface {
 
 type BaseController struct {
 	Ctx               *gin.Context //gin框架的Context
-	currentController interface{}  //当前执行的控制器
 }
 
 //初始化函数
-func (c *BaseController) Init(ctx *gin.Context, controller interface{}) {
+func (c *BaseController) Init(ctx *gin.Context) {
 	c.Ctx = ctx
-	c.currentController = controller
 }
 
 //做一些鉴权操作等
