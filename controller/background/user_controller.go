@@ -3,6 +3,7 @@ package background
 import (
 	"fmt"
 	"github.com/FlashFeiFei/my-gin/controller"
+	"github.com/FlashFeiFei/my-gin/exception"
 	"github.com/FlashFeiFei/my-gin/help"
 	"log"
 	"time"
@@ -25,4 +26,11 @@ func (c *UserController) HelloWorld() {
 //这样带上一个id,为毛我觉得这样怪怪的，直接从请求中获取不好吗
 func (c *UserController) HelloWorld2(id uint64) {
 	help.Gin200SuccessResponse(c.Ctx, fmt.Sprintf("恭喜恭喜,又终于进来了！id=%d", id), nil)
+}
+
+func (c *UserController) ErrorTest() {
+	ep := new(exception.BaseException)
+	ep.SetErrorCode(1)
+	ep.SetErrorMsg("测试异常抛出")
+	panic(ep)
 }

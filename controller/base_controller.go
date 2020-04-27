@@ -26,11 +26,21 @@ func NewController(exec_controller Controller) func(*gin.Context) {
 		ptrValue := reflect.New(trueType)                       //获取controller的真实值
 		controller := ptrValue.Interface().(Controller)         //底层的“值” =>  转interface{} => 再转具体类型 Controller
 
+		//捕获异常 try/catch
 		defer func() {
-			//捕获异常 try/catch
+
 			if err := recover(); err != nil {
-				log.Println(err)                                    //异常日志输出
-				help.Gin500ErrorResponse(context, err.(error), nil) //500响应
+
+				switch err.(type) {
+				case exception.MyException:
+					log.Println("asfasdfasdf")
+					//自定义异常，返回200,自定义的错误码
+					help.Gin200ErrorResponse(context, err.(exception.MyException).GetErrorCode(), err.(exception.MyException).Error(), nil)
+				default:
+					//非自定义异常，返回500错误
+					help.Gin500ErrorResponse(context, err.(error), nil) //500响应
+				}
+
 			}
 			//final
 			controller.Finish() //做一些释放资源的操作
@@ -40,7 +50,7 @@ func NewController(exec_controller Controller) func(*gin.Context) {
 		base_exception := controller.Prepare() //一些钩子吧,在真正执行到控制器请求前在做一下操作，例如权限认证等
 
 		if base_exception != nil {
-			help.Gin200ErrorResponse(context, base_exception.GetCode(), base_exception.Error(), nil)
+			help.Gin200ErrorResponse(context, base_exception.GetErrorCode(), base_exception.Error(), nil)
 			return //结束请求
 		}
 
@@ -104,8 +114,8 @@ func NewController(exec_controller Controller) func(*gin.Context) {
 
 //参考beego
 type Controller interface {
-	Init(ctx *gin.Context)            //ctx是gin的Context controller是当前执行的控制器,初始化
-	Prepare() exception.BaseException //解析
+	Init(ctx *gin.Context)          //ctx是gin的Context controller是当前执行的控制器,初始化
+	Prepare() exception.MyException //解析
 	Get()
 	Post()
 	Delete()
@@ -126,7 +136,7 @@ func (c *BaseController) Init(ctx *gin.Context) {
 }
 
 //做一些鉴权操作等
-func (c *BaseController) Prepare() exception.BaseException {
+func (c *BaseController) Prepare() exception.MyException {
 	return nil
 }
 
