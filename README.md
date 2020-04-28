@@ -26,3 +26,7 @@ git clone https://github.com/FlashFeiFei/my-gin.git
 
 访问聊天室路由  http://127.0.0.1:8083/ws/home
 ```
+
+# jenkins
+
+- 测试
