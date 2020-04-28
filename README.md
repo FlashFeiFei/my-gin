@@ -30,4 +30,3 @@ git clone https://github.com/FlashFeiFei/my-gin.git
 # jenkins
 
 - 测试1
-- 测试2
