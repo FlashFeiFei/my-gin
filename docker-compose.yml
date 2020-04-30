@@ -1,0 +1,17 @@
+version: '3'
+services:
+  golang-build:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      #工作目录空间
+    working_dir: /go/src/FlashFeiFei/my-gin
+    volumes:
+      #映射可执行文件
+      - ../bin/:/go/bin
+      #改成自己的工作目录空间
+      - ./:/go/src/FlashFeiFei/my-gin
+    command: [go, install, -v, ./...]
+    #设置环境变量
+    environment:
+      - GOPROXY=https://mirrors.aliyun.com/goproxy/
