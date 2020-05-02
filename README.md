@@ -28,6 +28,8 @@ git clone https://github.com/FlashFeiFei/my-gin.git
 ```
 
 # 部署说明
+- docker-compose 编译流程
+- 部署流程，自己写
 ## 部署流程
 
 - 启动一个docker编译，将编译的二进制文件取出来（为了golang mod的包复用，所以单独用一个docker编译）
