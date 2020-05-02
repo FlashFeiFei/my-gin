@@ -1,6 +1,7 @@
 version: '3'
 services:
   golang-build:
+    container_name: golang_common_build
     #指定构建的Dockerfile
     build:
       context: /home/liangyu/my_golang_work_dir
