@@ -9,6 +9,8 @@ services:
     volumes:
       #映射可执行文件,编译后的可执行文件，映射出来
       - /home/liangyu/my_golang_work_dir/bin/:/go/bin
+      #将pkg目录映射出来，公共
+      - /home/liangyu/my_golang_work_dir/pkg/:/go/pkg
       #jenkins执行的时候，   ./是项目的路径
       - ./:/go/src/FlashFeiFei/my-gin
     command: [go, install, -v, ./...]
