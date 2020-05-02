@@ -1,0 +1,17 @@
+version: '3'
+services:
+  my-gin:
+    #指定构建的Dockerfile
+    build:
+      context: .
+      dockerfile: Dockerfile
+      #工作目录空间
+    working_dir: /go/src/FlashFeiFei/my-gin
+    volumes:
+      #jenkins执行的时候，   ./是项目的路径
+      - /home/liangyu/my_golang_work_dir/bin:/go/bin
+      - ./:/go/src/FlashFeiFei/my-gin
+    command: [my-gin]
+    #设置环境变量
+    environment:
+      - GOPROXY=https://mirrors.aliyun.com/goproxy/
