@@ -27,6 +27,8 @@ git clone https://github.com/FlashFeiFei/my-gin.git
 访问聊天室路由  http://127.0.0.1:8083/ws/home
 ```
 
-# jenkins
+# 部署说明
+## 部署流程
 
-- 测试1
+- 启动一个docker编译，将编译的二进制文件取出来（为了golang mod的包复用，所以单独用一个docker编译）
+- 二进制部署到运营的容器中
