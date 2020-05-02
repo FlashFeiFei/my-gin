@@ -4,8 +4,8 @@ services:
     container_name: golang_common_build
     #指定构建的Dockerfile
     build:
-      context: /home/liangyu/my_golang_work_dir/
-      dockerfile: BuildDockerfile
+      context: .
+      dockerfile: Dockerfile
       #工作目录空间
     working_dir: /go/src/FlashFeiFei/my-gin
     volumes:
