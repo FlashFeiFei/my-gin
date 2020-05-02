@@ -1,9 +1,10 @@
 version: '3'
 services:
   golang-build:
+    #指定构建的Dockerfile
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: /home/liangyu/my_golang_work_dir
+      dockerfile: BuildDockerfile
       #工作目录空间
     working_dir: /go/src/FlashFeiFei/my-gin
     volumes:
