@@ -7,9 +7,12 @@ services:
       dockerfile: Dockerfile
       #工作目录空间
     working_dir: /go/src/FlashFeiFei/my-gin
+    ports:
+    - 8083:8083
     volumes:
-      #jenkins执行的时候，   ./是项目的路径
+      #映射可执行文件
       - /home/liangyu/my_golang_work_dir/bin:/go/bin
+      #jenkins执行的时候，   ./是项目的路径
       - ./:/go/src/FlashFeiFei/my-gin
     command: [my-gin]
     #设置环境变量
