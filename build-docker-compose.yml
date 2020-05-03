@@ -19,3 +19,8 @@ services:
     #设置环境变量
     environment:
       - GOPROXY=https://mirrors.aliyun.com/goproxy/
+    networks:
+      - go_build
+networks:
+  go_build:
+    driver: bridge

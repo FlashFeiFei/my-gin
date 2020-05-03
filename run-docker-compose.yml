@@ -18,3 +18,8 @@ services:
     #设置环境变量
     environment:
       - GOPROXY=https://mirrors.aliyun.com/goproxy/
+    networks:
+      - my-gin
+networks:
+  my-gin:
+    driver: bridge
