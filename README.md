@@ -34,3 +34,21 @@ git clone https://github.com/FlashFeiFei/my-gin.git
 
 - 启动一个docker编译，将编译的二进制文件取出来（为了golang mod的包复用，所以单独用一个docker编译）
 - 二进制部署到运营的容器中
+
+
+- 自动化部署脚本
+```cassandraql
+pwd
+echo '编译程序'
+echo '运行编译容器'
+docker-compose -f build-docker-compose.yml up
+echo '编译成功'
+echo '关闭编译容器'
+docker-compose -f build-docker-compose.yml down
+echo '运行启动docker-compose容器'
+echo '关闭之前的运行容器'
+docker-compose -f run-docker-compose.yml down
+echo '运行，运行容器'
+docker-compose -f run-docker-compose.yml up -d
+echo '部署成功'
+```
